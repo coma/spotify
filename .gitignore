@@ -7,3 +7,4 @@ node_modules
 /web/*.js
 /web/*.map
 /web/*.css
+/config.json
