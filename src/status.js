@@ -1,0 +1,9 @@
+export const FETCHING = 'FETCHING';
+export const FETCHED  = 'FETCHED';
+export const CREATING = 'CREATING';
+export const CREATED  = 'CREATED';
+export const UPDATING = 'UPDATING';
+export const UPDATED  = 'UPDATED';
+export const DELETING = 'DELETING';
+export const DELETED  = 'DELETED';
+export const ERROR    = 'ERROR';
