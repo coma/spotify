@@ -15,6 +15,7 @@
         "css-loader"                 : "^0.23.1",
         "express"                    : "^4.13.4",
         "extract-text-webpack-plugin": "^1.0.1",
+        "ignore-styles"              : "^1.2.0",
         "moment"                     : "^2.13.0",
         "react"                      : "^15.0.1",
         "react-dom"                  : "^15.0.1",
@@ -32,6 +33,7 @@
         "babel-preset-react-hmre"    : "^1.1.1",
         "enzyme"                     : "^2.2.0",
         "eslint"                     : "^2.8.0",
+        "glob"                       : "^7.0.3",
         "nock"                       : "^8.0.0",
         "nyc"                        : "^6.4.0",
         "openurl"                    : "^1.1.1",
@@ -47,11 +49,23 @@
     },
     "scripts"        : {
         "postinstall": "node prompt",
-        "clean"      : "rm -rf web/app.* web/worker.js",
-        "lint"       : "eslint src",
-        "build"      : "NODE_ENV=production babel-node webpack/build",
+        "clean"      : "rm -rf web/*.js web/*.css",
         "dev"        : "babel-node webpack/dev",
+        "build"      : "NODE_ENV=production babel-node webpack/build",
+        "lint"       : "eslint src",
+        "test"       : "NODE_ENV=test babel-node test",
+        "cover"      : "nyc npm test",
         "start"      : "node start"
+    },
+    "nyc"            : {
+        "reporter" : [
+            "lcov",
+            "text",
+            "html"
+        ],
+        "extension": [
+            ".jsx"
+        ]
     },
     "engines"        : {
         "node": "5.10.1"

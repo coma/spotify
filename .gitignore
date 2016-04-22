@@ -3,6 +3,7 @@ node_modules
 .idea
 *.log
 .nyc_output
+.nyc_cache
 /coverage
 /web/*.js
 /web/*.map
