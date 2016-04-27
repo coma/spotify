@@ -1,15 +1,15 @@
 import { Request as SuperAgent } from 'superagent';
 
-let store;
+let getState = () => ({token: {}});
 
-export function setStore (s) {
+export function setGetState (f) {
 
-    store = s;
+    getState = f;
 }
 
 export function trimSlashes (s) {
 
-    return s.replace(/^\/|\/$/, '');
+    return s.replace(/^\/|\/$/g, '');
 }
 
 export function getUrl (path, root = 'https://api.spotify.com/v1') {
@@ -26,7 +26,7 @@ export default class Request extends SuperAgent {
 
     go () {
 
-        const { token } = store.getState();
+        const { token } = getState();
 
         if (token.access) {
 
