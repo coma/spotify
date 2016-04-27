@@ -4,7 +4,9 @@ if (process.env.NODE_ENV) {
 }
 
 const fs     = require('fs'),
-      prompt = require('prompt');
+      prompt = require('prompt'),
+      path   = require('path'),
+      file   = path.join(__dirname, 'config.json');
 
 const schema = {
     properties: {
@@ -26,9 +28,25 @@ const schema = {
     }
 };
 
+if (fs.existsSync(file)) {
+
+    const current = require(file),
+          props   = schema.properties;
+
+    Object
+        .keys(props)
+        .forEach(name => {
+
+            if (current.hasOwnProperty(name)) {
+
+                props[name].default = current[name];
+            }
+        });
+}
+
 prompt.message = '';
 prompt.start();
 prompt.get(schema, (error, result) => {
 
-    fs.writeFileSync('config.json', JSON.stringify(result, null, 4));
+    fs.writeFileSync(file, JSON.stringify(result, null, 4));
 });

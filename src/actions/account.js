@@ -1,12 +1,11 @@
 import { FETCHING, FETCHED, ERROR } from '../status';
-import request from 'superagent';
-import { push } from 'react-router-redux';
+import { get } from '../request';
 
 export const ACCOUNT_FETCHING = 'ACCOUNT_' + FETCHING;
-export const ACCOUNT_FETCHED = 'ACCOUNT_' + FETCHED;
-export const ACCOUNT_ERROR = 'ACCOUNT_' + ERROR;
+export const ACCOUNT_FETCHED  = 'ACCOUNT_' + FETCHED;
+export const ACCOUNT_ERROR    = 'ACCOUNT_' + ERROR;
 
-export function fetch (token) {
+export function fetch () {
 
     return dispatch => {
 
@@ -14,17 +13,20 @@ export function fetch (token) {
             type: ACCOUNT_FETCHING
         });
 
-        request
-            .get('https://api.spotify.com/v1/me')
-            .set('Authorization', 'Bearer ' + token.access)
-            .end((error, response) => {
+        get('me')
+            .go()
+            .then(response => {
 
                 dispatch({
                     type: ACCOUNT_FETCHED,
                     data: response.body
                 });
+            })
+            .catch(error => {
 
-                dispatch(push('/app'));
+                dispatch({
+                    type: ACCOUNT_ERROR
+                });
             });
     };
 }
