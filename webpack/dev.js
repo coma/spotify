@@ -15,7 +15,8 @@ const config = {
         worker: path.join(src, 'worker')
     },
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js', '.jsx'],
+        root      : process.cwd()
     },
     output: {
         path      : web,
