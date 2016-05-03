@@ -1,4 +1,4 @@
-import { VALIDATING, VALIDATED, INVALIDATED, REFRESHED, INIT } from '../status';
+import { VALIDATING, VALIDATED, INVALIDATED, REFRESHED, DELETING, DELETED, INIT } from '../status';
 import { ACCOUNT_FETCHED } from './account';
 import { get } from '../request';
 import request from 'superagent';
@@ -9,6 +9,8 @@ export const TOKEN_VALIDATING  = 'TOKEN_' + VALIDATING;
 export const TOKEN_VALIDATED   = 'TOKEN_' + VALIDATED;
 export const TOKEN_INVALIDATED = 'TOKEN_' + INVALIDATED;
 export const TOKEN_REFRESHED   = 'TOKEN_' + REFRESHED;
+export const TOKEN_DELETING    = 'TOKEN_' + DELETING;
+export const TOKEN_DELETED     = 'TOKEN_' + DELETED;
 
 export function grabFromQuery (query) {
 
@@ -26,6 +28,21 @@ export function grabFromQuery (query) {
     };
 
     return (dispatch, getState) => validateToken(token, dispatch, getState);
+}
+
+// https://github.com/spotify/web-api/issues/126
+export function deleteToken () {
+
+    return (dispatch, getState) => {
+
+        cancelRefresh(getState);
+
+        dispatch({
+            type: TOKEN_DELETED
+        });
+
+        dispatch(push('/login'));
+    };
 }
 
 function validateToken (token, dispatch, getState) {

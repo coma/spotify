@@ -1,0 +1,23 @@
+:local(.main) {
+    height: 25px;
+}
+
+:local(.a) {
+    fill: #C6E5B3;
+}
+
+:local(.b) {
+    fill: #77B255;
+}
+
+:local(.c) {
+    fill: #FFFFFF;
+}
+
+:local(.d) {
+    fill: #292F33;
+}
+
+:local(.e) {
+    fill: #5C913B;
+}

@@ -1,7 +1,8 @@
 import { ACCOUNT_FETCHING, ACCOUNT_FETCHED, ACCOUNT_ERROR } from '../actions/account';
-import { FETCHING, FETCHED, ERROR } from '../status';
+import { TOKEN_DELETED } from '../actions/token';
+import { FETCHING, FETCHED, ERROR, INIT } from '../status';
 
-export default function account (state = {}, action = {}) {
+export default function account (state = {status: INIT}, action = {}) {
 
     switch (action.type) {
 
@@ -25,6 +26,12 @@ export default function account (state = {}, action = {}) {
 
             return {
                 status: ERROR
+            };
+
+        case TOKEN_DELETED:
+
+            return {
+                status: INIT
             };
 
         default:

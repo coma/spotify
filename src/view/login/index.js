@@ -1,23 +1,23 @@
 import style from './style.css';
+import buttonStyle from 'src/button.css';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { grabFromQuery } from '../../actions/token';
-import { VALIDATING, VALIDATED } from '../../status';
+import { grabFromQuery } from 'src/actions/token';
+import { INIT, VALIDATING, VALIDATED } from 'src/status';
 
 class LoginView extends Component {
 
-    constructor (props) {
+    componentWillMount () {
 
-        super(props);
-        props.grabFromQuery(props.query);
+        this.props.grabFromQuery(this.props.query);
     }
 
     renderLogin () {
 
         return (
-            <div className={ style.box }>
-                <a href="/oauth" target="_self">login from Spotify</a>
+            <div className={ style.main }>
+                <a href="/oauth" target="_self" className={ buttonStyle.success }>login with Spotify</a>
             </div>
         );
     }
@@ -25,14 +25,14 @@ class LoginView extends Component {
     renderValidating () {
 
         return (
-            <div className={ style.box }>Validating...</div>
+            <div className={ style.main }>Validating...</div>
         );
     }
 
     renderValidated () {
 
         return (
-            <div className={ style.box }>Welcome!</div>
+            <div className={ style.main }>Welcome!</div>
         );
     }
 
@@ -53,7 +53,7 @@ class LoginView extends Component {
 }
 
 LoginView.propTypes = {
-    status       : PropTypes.string.isRequired,
+    status       : PropTypes.oneOf([INIT, VALIDATING, VALIDATED]).isRequired,
     query        : PropTypes.object.isRequired,
     grabFromQuery: PropTypes.func.isRequired
 };
