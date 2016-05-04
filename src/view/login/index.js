@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { grabFromQuery } from 'src/actions/token';
 import { INIT, VALIDATING, VALIDATED } from 'src/status';
 
-class LoginView extends Component {
+export class LoginView extends Component {
 
     componentWillMount () {
 
