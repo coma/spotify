@@ -1,6 +1,6 @@
 import test from 'tape';
 import nock from 'nock';
-import { trimSlashes, getUrl, setGetState, get, post, patch, put, head, del } from './request';
+import Request from './request';
 
 function mockHTTP (method = 'GET', code = 200) {
 
@@ -15,7 +15,7 @@ test('The trimSlashes', t => {
           actual   = `/${ expected }/`;
 
     t.plan(1);
-    t.equal(trimSlashes(actual), expected, 'Should trim slashes.');
+    t.equal(Request.trimSlashes(actual), expected, 'Should trim slashes.');
 });
 
 test('The getUrl', t => {
@@ -25,7 +25,7 @@ test('The getUrl', t => {
           expected = 'http://pepe.com/lopez';
 
     t.plan(1);
-    t.equal(getUrl(path, root), expected, 'Should return a complete and well formed URL.');
+    t.equal(Request.getUrl(path, root), expected, 'Should return a complete and well formed URL.');
 });
 
 test('The setGetState', t => {
@@ -36,23 +36,23 @@ test('The setGetState', t => {
         access: Math.random()
     };
 
-    setGetState(() => ({token}));
+    Request.setGetState(() => ({token}));
 
     mockHTTP()
         .matchHeader('Authorization', 'Bearer ' + token.access);
 
-    get('/200').go().then(() => t.pass('Should set the auth token.'));
+    Request.get('/200').go().then(() => t.pass('Should set the auth token.'));
 });
 
 test('Every HTTP exported method', t => {
 
     const methods = {
-        GET   : get,
-        POST  : post,
-        PATCH : patch,
-        PUT   : put,
-        HEAD  : head,
-        DELETE: del
+        GET   : Request.get,
+        POST  : Request.post,
+        PATCH : Request.patch,
+        PUT   : Request.put,
+        HEAD  : Request.head,
+        DELETE: Request.delete
     };
 
     const names = Object.keys(methods);

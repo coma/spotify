@@ -9,8 +9,8 @@ export default function account (state = {status: INIT}, action = {}) {
         case ACCOUNT_FETCHED:
 
             return {
-                status: FETCHED,
-                data  : {
+                status : FETCHED,
+                profile: {
                     email   : action.data.email,
                     username: action.data.display_name || action.data.id
                 }

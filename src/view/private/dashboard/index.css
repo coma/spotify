@@ -1,0 +1,40 @@
+:local(.albums) {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+:local(.albums) li {
+    position: relative;
+    width: calc(100% / 3 - 40px);
+    margin: 0 20px 20px 0;
+    border: 1px solid #C5C5C5;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
+}
+
+:local(.albums) li:nth-child(3n) {
+    margin-right: 0;
+}
+
+:local(.albums) img {
+    display: block;
+    width: 100%;
+}
+
+:local(.albums) h2 {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    left: 5px;
+    font-size: 12px;
+    line-height: 30px;
+    color: #FFFFFF;
+}
+
+:local(.albums) span {
+    display: inline-block;
+    padding: 8px;
+    line-height: 12px;
+    background-color: rgba(0, 0, 0, .8);
+}

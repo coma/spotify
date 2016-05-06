@@ -1,6 +1,6 @@
 import { VALIDATING, VALIDATED, INVALIDATED, REFRESHED, DELETING, DELETED, INIT } from '../status';
 import { ACCOUNT_FETCHED } from './account';
-import { get } from '../request';
+import Request from '../request';
 import request from 'superagent';
 import { push } from 'react-router-redux';
 
@@ -54,7 +54,7 @@ function validateToken (token, dispatch, getState) {
         data: token
     });
 
-    get('me')
+    Request.get('me')
         .go()
         .then(response => onValidated(token, response.body, dispatch))
         .catch(error => onInvalidated(error, dispatch));

@@ -3,6 +3,9 @@ import test from 'tape';
 import { LoginView } from './index';
 import { shallow } from 'enzyme';
 import { INIT, VALIDATING, VALIDATED } from 'src/status';
+import { grabFromQuery } from 'src/actions/token';
+import sinon from 'sinon';
+import * as Redux from 'redux';
 
 test('The LoginView', t => {
 
@@ -50,4 +53,41 @@ test('The LoginView', t => {
     );
 
     t.equal(wrapper.text(), 'Welcome!', 'Should show some feedback after succeeded validation.');
+});
+
+test('The LoginView mapStateToProps', t => {
+
+    t.plan(1);
+
+    const state = {
+        token  : {
+            status: VALIDATED
+        },
+        routing: {
+            locationBeforeTransitions: {
+                query: {}
+            }
+        }
+    };
+
+    const actual = LoginView.mapStateToProps(state);
+
+    const expected = {
+        status: state.token.status,
+        query : state.routing.locationBeforeTransitions.query
+    };
+
+    t.deepEqual(actual, expected, 'Should map the props.');
+});
+
+test('The LoginView mapDispatchToProps', t => {
+
+    t.plan(1);
+
+    const expected = { grabFromQuery },
+          spied    = sinon.spy(Redux, 'bindActionCreators');
+
+    LoginView.mapDispatchToProps(() => {});
+    t.deepEqual(spied.lastCall.args[0], expected, 'Should map the actions.');
+    spied.restore();
 });

@@ -1,32 +1,15 @@
 import { Request as SuperAgent } from 'superagent';
 
-let getState = () => ({token: {}});
-
-export function setGetState (f) {
-
-    getState = f;
-}
-
-export function trimSlashes (s) {
-
-    return s.replace(/^\/|\/$/g, '');
-}
-
-export function getUrl (path, root = 'https://api.spotify.com/v1') {
-
-    return trimSlashes(root) + '/' + trimSlashes(path);
-}
-
 export default class Request extends SuperAgent {
 
     constructor (method, path) {
 
-        super(method, getUrl(path));
+        super(method, Request.getUrl(path));
     }
 
     go () {
 
-        const { token } = getState();
+        const { token } = Request.getState();
 
         if (token.access) {
 
@@ -45,34 +28,49 @@ export default class Request extends SuperAgent {
             }
         }));
     }
-}
 
-export function get (path) {
+    static setGetState (getState) {
 
-    return new Request('GET', path);
-}
+        Request.getState = getState;
+    }
 
-export function post (path) {
+    static trimSlashes (s) {
 
-    return new Request('POST', path);
-}
+        return s.replace(/^\/|\/$/g, '');
+    }
 
-export function patch (path) {
+    static getUrl (path, root = 'https://api.spotify.com/v1') {
 
-    return new Request('PATCH', path);
-}
+        return Request.trimSlashes(root) + '/' + Request.trimSlashes(path);
+    }
 
-export function put (path) {
+    static get (path) {
 
-    return new Request('PUT', path);
-}
+        return new Request('GET', path);
+    }
 
-export function head (path) {
+    static post (path) {
 
-    return new Request('HEAD', path);
-}
+        return new Request('POST', path);
+    }
 
-export function del (path) {
+    static patch (path) {
 
-    return new Request('DELETE', path);
+        return new Request('PATCH', path);
+    }
+
+    static put (path) {
+
+        return new Request('PUT', path);
+    }
+
+    static head (path) {
+
+        return new Request('HEAD', path);
+    }
+
+    static delete (path) {
+
+        return new Request('DELETE', path);
+    }
 }

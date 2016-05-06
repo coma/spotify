@@ -1,3 +1,5 @@
+'use strict';
+
 const path   = require('path'),
       glob   = require('glob'),
       tape   = require('tape'),

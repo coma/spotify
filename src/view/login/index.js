@@ -1,12 +1,25 @@
 import style from './style.css';
 import buttonStyle from 'src/button.css';
 import React, { Component, PropTypes } from 'react';
+import { INIT, VALIDATING, VALIDATED } from 'src/status';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { grabFromQuery } from 'src/actions/token';
-import { INIT, VALIDATING, VALIDATED } from 'src/status';
 
 export class LoginView extends Component {
+
+    static mapStateToProps (state) {
+
+        return {
+            status: state.token.status,
+            query : state.routing.locationBeforeTransitions.query
+        };
+    }
+
+    static mapDispatchToProps (dispatch) {
+
+        return bindActionCreators({ grabFromQuery }, dispatch);
+    }
 
     componentWillMount () {
 
@@ -58,17 +71,4 @@ LoginView.propTypes = {
     grabFromQuery: PropTypes.func.isRequired
 };
 
-function mapStateToProps (state) {
-
-    return {
-        status: state.token.status,
-        query : state.routing.locationBeforeTransitions.query
-    };
-}
-
-function mapDispatchToProps (dispatch) {
-
-    return bindActionCreators({ grabFromQuery }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginView);
+export default connect(LoginView.mapStateToProps, LoginView.mapDispatchToProps)(LoginView);
