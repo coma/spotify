@@ -13,7 +13,8 @@ export function fetchReleases () {
             type: RELEASES_FETCHING
         });
 
-        Request.get('browse/new-releases')
+        Request
+            .get('browse/new-releases')
             .go()
             .then(response => {
 

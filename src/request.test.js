@@ -38,10 +38,14 @@ test('The setGetState', t => {
 
     Request.setGetState(() => ({token}));
 
-    mockHTTP()
-        .matchHeader('Authorization', 'Bearer ' + token.access);
+    nock('https://api.spotify.com')
+        .get('/v1/me')
+        .reply(200, (uri, req) => t.ok(true, 'Should set the auth token.'));
 
-    Request.get('/200').go().then(() => t.pass('Should set the auth token.'));
+    Request
+        .get('/me')
+        .go()
+        .then(() => t.end());
 });
 
 test('Every HTTP exported method', t => {

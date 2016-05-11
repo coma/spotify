@@ -35,6 +35,7 @@
         "eslint"                     : "^2.8.0",
         "glob"                       : "^5.0.5",
         "ignore-styles"              : "^1.2.0",
+        "leaked-handles"             : "^5.2.0",
         "nock"                       : "^8.0.0",
         "nyc"                        : "^6.4.0",
         "openurl"                    : "^1.1.1",

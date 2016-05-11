@@ -12,6 +12,10 @@ export const TOKEN_REFRESHED   = 'TOKEN_' + REFRESHED;
 export const TOKEN_DELETING    = 'TOKEN_' + DELETING;
 export const TOKEN_DELETED     = 'TOKEN_' + DELETED;
 
+export const TIME_OFFSET = 10;
+
+let refreshTimeout = null;
+
 export function grabFromQuery (query) {
 
     if (!['access_token', 'refresh_token', 'expires_in'].every(n => query.hasOwnProperty(n))) {
@@ -27,15 +31,15 @@ export function grabFromQuery (query) {
         expiration: +query.expires_in + Date.now()
     };
 
-    return (dispatch, getState) => validateToken(token, dispatch, getState);
+    return dispatch => validateToken(token, dispatch);
 }
 
 // https://github.com/spotify/web-api/issues/126
 export function deleteToken () {
 
-    return (dispatch, getState) => {
+    return dispatch => {
 
-        cancelRefresh(getState);
+        cancelRefresh();
 
         dispatch({
             type: TOKEN_DELETED
@@ -45,16 +49,17 @@ export function deleteToken () {
     };
 }
 
-function validateToken (token, dispatch, getState) {
+function validateToken (token, dispatch) {
 
-    cancelRefresh(getState);
+    cancelRefresh();
 
     dispatch({
         type: TOKEN_VALIDATING,
         data: token
     });
 
-    Request.get('me')
+    Request
+        .get('me')
         .go()
         .then(response => onValidated(token, response.body, dispatch))
         .catch(error => onInvalidated(error, dispatch));
@@ -82,17 +87,18 @@ function onInvalidated (error, dispatch) {
     });
 }
 
-function cancelRefresh (getState) {
+function cancelRefresh () {
 
-    clearTimeout(getState().token.delay);
+    clearTimeout(refreshTimeout);
 }
 
-function delayRefresh (token, dispatch, timeOffset = 10) {
+function delayRefresh (token, dispatch) {
 
-    const delay = token.expiration - Date.now() - timeOffset,
-          id    = setTimeout(() => refreshToken(token, dispatch), 1000 * delay);
+    const delay = token.expiration - Date.now() - TIME_OFFSET;
 
-    return {...token, delay: id};
+    refreshTimeout = setTimeout(() => refreshToken(token, dispatch), 1000 * delay);
+
+    return token;
 }
 
 function refreshToken (token, dispatch) {
@@ -102,7 +108,7 @@ function refreshToken (token, dispatch) {
         .query({
             refresh_token: token.refresh
         })
-        .end((error, { status, body }) => status === 200 ? onRefreshed(body, token, dispatch) : onInvalidated(error, dispatch));
+        .end((error, response) => error ? onInvalidated(error, dispatch) : onRefreshed(response.body, token, dispatch));
 }
 
 function onRefreshed ({access_token, expires_in}, token, dispatch) {

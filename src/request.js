@@ -29,6 +29,13 @@ export default class Request extends SuperAgent {
         }));
     }
 
+    static getState () {
+
+        return {
+            token: {}
+        };
+    }
+
     static setGetState (getState) {
 
         Request.getState = getState;
