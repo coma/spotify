@@ -12,7 +12,7 @@ export const TOKEN_REFRESHED   = 'TOKEN_' + REFRESHED;
 export const TOKEN_DELETING    = 'TOKEN_' + DELETING;
 export const TOKEN_DELETED     = 'TOKEN_' + DELETED;
 
-export const TIME_OFFSET = 10;
+const TIME_OFFSET = 10;
 
 let refreshTimeout = null;
 
@@ -67,9 +67,11 @@ function validateToken (token, dispatch) {
 
 function onValidated (token, user, dispatch) {
 
+    delayRefresh(token, dispatch);
+
     dispatch({
         type: TOKEN_VALIDATED,
-        data: delayRefresh(token, dispatch)
+        data: token
     });
 
     dispatch({
@@ -97,8 +99,6 @@ function delayRefresh (token, dispatch) {
     const delay = token.expiration - Date.now() - TIME_OFFSET;
 
     refreshTimeout = setTimeout(() => refreshToken(token, dispatch), 1000 * delay);
-
-    return token;
 }
 
 function refreshToken (token, dispatch) {
@@ -125,4 +125,20 @@ function onRefreshed ({access_token, expires_in}, token, dispatch) {
     });
 
     delayRefresh(token, dispatch);
+}
+
+/* istanbul ignore next  */
+if (process.env.NODE_ENV === 'test') {
+
+    exports.$private = {
+        TIME_OFFSET,
+        refreshTimeout: () => refreshTimeout,
+        validateToken,
+        onValidated,
+        onInvalidated,
+        cancelRefresh,
+        delayRefresh,
+        refreshToken,
+        onRefreshed
+    };
 }

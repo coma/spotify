@@ -4,7 +4,6 @@ require('leaked-handles');
 
 const path   = require('path'),
       glob   = require('glob'),
-      nock   = require('nock'),
       tape   = require('tape'),
       report = require('tap-spec'),
       ignore = require('ignore-styles');
@@ -21,8 +20,4 @@ if (files.length < 1) {
     files = glob.sync('src/**/*.test.js');
 }
 
-files.map(file => {
-
-    nock.cleanAll();
-    require(path.resolve(__dirname, file));
-});
+files.map(file => require(path.resolve(__dirname, file)));

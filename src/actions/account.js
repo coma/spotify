@@ -5,7 +5,7 @@ export const ACCOUNT_FETCHING = 'ACCOUNT_' + FETCHING;
 export const ACCOUNT_FETCHED  = 'ACCOUNT_' + FETCHED;
 export const ACCOUNT_ERROR    = 'ACCOUNT_' + ERROR;
 
-export function fetch () {
+export function fetchAccount () {
 
     return dispatch => {
 
@@ -13,7 +13,8 @@ export function fetch () {
             type: ACCOUNT_FETCHING
         });
 
-        Request.get('me')
+        Request
+            .get('me')
             .go()
             .then(response => {
 
