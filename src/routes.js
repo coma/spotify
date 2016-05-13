@@ -12,7 +12,7 @@ import PlaylistView  from './view/private/playlist';
 export default function routes (verifyToken) {
 
     return (
-        <Route component={ AppView } path="/">
+        <Route component={ AppView } path="">
             <Route component={ LoginView } path="login"/>
             <Route component={ LogoutView } path="logout"/>
             <Route component={ PrivateView } path="app" onEnter={ verifyToken }>
