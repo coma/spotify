@@ -48,7 +48,7 @@ prompt.message = '';
 prompt.start();
 prompt.get(schema, (error, result) => {
 
-    result.url = `http://localhost:${ result.port }/oauth/callback`;
+    result.url = `http://localhost:${ result.port }`;
 
     fs.writeFileSync(file, JSON.stringify(result, null, 4));
 });
