@@ -4,7 +4,7 @@ const express     = require('express'),
       qs          = require('querystring'),
       config      = require('../config'),
       port        = config.port,
-      redirectUri = config.url,
+      redirectUri = config.url + '/oauth/callback',
       app         = express();
 
 const scopes = [
