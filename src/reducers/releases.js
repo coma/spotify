@@ -2,7 +2,11 @@ import { RELEASES_FETCHING, RELEASES_FETCHED, RELEASES_ERROR } from '../actions/
 import { TOKEN_DELETED } from '../actions/token';
 import { FETCHING, FETCHED, ERROR, INIT } from '../status';
 
-export default function releases (state = {status: INIT}, action = {}) {
+export const initialState = {
+    status: INIT
+};
+
+export default function releases (state = initialState, action = {}) {
 
     switch (action.type) {
 

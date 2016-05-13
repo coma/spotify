@@ -1,4 +1,4 @@
-import { VALIDATING, VALIDATED, INVALIDATED, REFRESHED, DELETING, DELETED, INIT } from '../status';
+import { VALIDATING, VALIDATED, INVALIDATED, REFRESHED, DELETED, INIT } from '../status';
 import { ACCOUNT_FETCHED } from './account';
 import Request from '../request';
 import request from 'superagent';
@@ -9,7 +9,6 @@ export const TOKEN_VALIDATING  = 'TOKEN_' + VALIDATING;
 export const TOKEN_VALIDATED   = 'TOKEN_' + VALIDATED;
 export const TOKEN_INVALIDATED = 'TOKEN_' + INVALIDATED;
 export const TOKEN_REFRESHED   = 'TOKEN_' + REFRESHED;
-export const TOKEN_DELETING    = 'TOKEN_' + DELETING;
 export const TOKEN_DELETED     = 'TOKEN_' + DELETED;
 
 const TIME_OFFSET = 10;
