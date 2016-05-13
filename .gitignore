@@ -8,4 +8,4 @@ node_modules
 /web/*.js
 /web/*.map
 /web/*.css
-/config.json
+/config/local.json
