@@ -1,8 +1,3 @@
-if (process.env.NODE_ENV) {
-
-    return;
-}
-
 const fs     = require('fs'),
       prompt = require('prompt'),
       path   = require('path'),
