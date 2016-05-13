@@ -55,7 +55,7 @@
         "webpack-hot-middleware"     : "^2.10.0"
     },
     "scripts"        : {
-        "postinstall": "node prompt",
+        "postinstall": "node config/prompt",
         "clean"      : "rm -rf web/*.js web/*.css",
         "dev"        : "babel-node webpack/dev",
         "build"      : "NODE_ENV=production babel-node webpack/build",

@@ -6,7 +6,7 @@ if (process.env.NODE_ENV) {
 const fs     = require('fs'),
       prompt = require('prompt'),
       path   = require('path'),
-      file   = path.join(__dirname, 'config.json');
+      file   = path.join(__dirname, 'local.json');
 
 const schema = {
     properties: {
@@ -47,6 +47,8 @@ if (fs.existsSync(file)) {
 prompt.message = '';
 prompt.start();
 prompt.get(schema, (error, result) => {
+
+    result.url = `http://localhost:${ result.port }/oauth/callback`;
 
     fs.writeFileSync(file, JSON.stringify(result, null, 4));
 });

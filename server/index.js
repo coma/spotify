@@ -2,9 +2,9 @@ const express     = require('express'),
       request     = require('superagent'),
       path        = require('path'),
       qs          = require('querystring'),
-      config      = require('../config.json'),
-      port        = process.env.PORT || config.port,
-      redirectUri = process.env.URL || `http://localhost:${ port }/oauth/callback`,
+      config      = require('../config'),
+      port        = config.port,
+      redirectUri = config.url,
       app         = express();
 
 const scopes = [
