@@ -4,8 +4,19 @@ import { bindActionCreators } from 'redux';
 import { fetchReleases } from 'src/actions/releases';
 import { INIT, FETCHING, FETCHED } from 'src/status';
 import style from './index.css';
+import Spinner from 'src/component/spinner';
 
-class DashboardView extends Component {
+export class DashboardView extends Component {
+
+    static mapStateToProps ({ releases }) {
+
+        return releases;
+    }
+
+    static mapDispatchToProps (dispatch) {
+
+        return bindActionCreators({ fetchReleases }, dispatch);
+    }
 
     componentWillMount () {
 
@@ -17,9 +28,7 @@ class DashboardView extends Component {
 
     renderReleasesFetching () {
 
-        return (
-            <div>Fetching...</div>
-        );
+        return <Spinner/>;
     }
 
     renderReleasesFetched () {
@@ -47,14 +56,11 @@ class DashboardView extends Component {
 
         switch (this.props.status) {
 
-            case FETCHING:
-                return this.renderReleasesFetching();
-
             case FETCHED:
                 return this.renderReleasesFetched();
 
             default:
-                return false;
+                return this.renderReleasesFetching();
         }
     }
 
@@ -78,14 +84,4 @@ DashboardView.propTypes = {
     }))
 };
 
-function mapStateToProps ({ releases }) {
-
-    return releases;
-}
-
-function mapDispatchToProps (dispatch) {
-
-    return bindActionCreators({ fetchReleases }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardView);
+export default connect(DashboardView.mapStateToProps, DashboardView.mapDispatchToProps)(DashboardView);
