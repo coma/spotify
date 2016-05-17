@@ -5,17 +5,18 @@ import { fetchReleases } from 'src/actions/releases';
 import { INIT, FETCHING, FETCHED } from 'src/status';
 import style from './index.css';
 import Spinner from 'src/component/spinner';
+import { Link } from 'react-router';
 
 export class DashboardView extends Component {
 
-    static mapStateToProps ({ releases }) {
+    static mapStateToProps ({releases}) {
 
         return releases;
     }
 
     static mapDispatchToProps (dispatch) {
 
-        return bindActionCreators({ fetchReleases }, dispatch);
+        return bindActionCreators({fetchReleases}, dispatch);
     }
 
     componentWillMount () {
@@ -42,12 +43,11 @@ export class DashboardView extends Component {
 
         return (
             <li key={ id }>
-                <div>
-                    <img src={ cover }/>
-                </div>
-                <h2>
-                    <span>{ name }</span>
-                </h2>
+                <Link to={ `/app/album/${ id }` } style={ {backgroundImage: `url(${ cover })`} }>
+                    <h2>
+                        <span>{ name }</span>
+                    </h2>
+                </Link>
             </li>
         );
     }

@@ -8,6 +8,7 @@ import {shallow} from 'enzyme';
 import {INIT, FETCHING, FETCHED} from 'src/status';
 import { fetchReleases } from 'src/actions/releases';
 import Spinner from 'src/component/spinner';
+import { Link } from 'react-router';
 
 test(`The DashboardView on ${ INIT }`, t => {
 
@@ -61,7 +62,7 @@ test(`The DashboardView on ${ FETCHED }`, t => {
     wrapper.find('li').forEach((li, i) => {
 
         t.equal(li.find('span').text(), list[i].name, 'Should render the name.');
-        t.equal(li.find('img').props().src, list[i].cover, 'Should render the cover image.');
+        t.equal(li.find(Link).props().style.backgroundImage, `url(${ list[i].cover })`, 'Should render the cover image.');
     });
 });
 

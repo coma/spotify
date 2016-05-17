@@ -8,17 +8,17 @@ import { grabFromQuery } from 'src/actions/token';
 
 export class LoginView extends Component {
 
-    static mapStateToProps (state) {
+    static mapStateToProps ({token}, {location}) {
 
         return {
-            status: state.token.status,
-            query : state.routing.locationBeforeTransitions.query
+            status: token.status,
+            query : location.query
         };
     }
 
     static mapDispatchToProps (dispatch) {
 
-        return bindActionCreators({ grabFromQuery }, dispatch);
+        return bindActionCreators({grabFromQuery}, dispatch);
     }
 
     componentWillMount () {

@@ -13,13 +13,16 @@
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
 }
 
-:local(.albums) li:nth-child(3n) {
-    margin-right: 0;
+:local(.albums) a {
+    position: relative;
+    display: block;
+    padding: 100% 0 0 0;
+    background: #1DADF5 none no-repeat center;
+    background-size: cover;
 }
 
-:local(.albums) img {
-    display: block;
-    width: 100%;
+:local(.albums) li:nth-child(3n) {
+    margin-right: 0;
 }
 
 :local(.albums) h2 {

@@ -62,19 +62,20 @@ test('The LoginView mapStateToProps', t => {
     const state = {
         token  : {
             status: VALIDATED
-        },
-        routing: {
-            locationBeforeTransitions: {
-                query: {}
-            }
         }
     };
 
-    const actual = LoginView.mapStateToProps(state);
+    const ownProps = {
+        location: {
+            query: {}
+        }
+    };
+
+    const actual = LoginView.mapStateToProps(state, ownProps);
 
     const expected = {
         status: state.token.status,
-        query : state.routing.locationBeforeTransitions.query
+        query : ownProps.location.query
     };
 
     t.deepEqual(actual, expected, 'Should map the props.');
