@@ -7,5 +7,5 @@ test('The AppView', t => {
 
     t.plan(1);
     const wrapper = shallow(<AppView><br/></AppView>);
-    t.equal(wrapper.find('br').length, 1, 'Should nest its children.');
+    t.equal(wrapper.find('br').length, 10, 'Should nest its children.');
 });
