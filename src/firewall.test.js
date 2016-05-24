@@ -20,5 +20,5 @@ test('The firewall', t => {
 
     state.token.status = INVALIDATED;
 
-    tokenValidator(null, path => t.equal(path + 'hola', '/login', 'Should redirect to login if the current token is invalid.'));
+    tokenValidator(null, path => t.equal(path, '/login', 'Should redirect to login if the current token is invalid.'));
 });
