@@ -68,7 +68,7 @@ export class DashboardView extends Component {
 
         return (
             <div>
-                <h1>Dashboard</h1>
+                <h1>Dashboard (hola)</h1>
                 { this.renderReleases() }
             </div>
         );
